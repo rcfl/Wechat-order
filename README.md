@@ -1,13 +1,13 @@
 # 微信点餐
 
-<div id="0">目录：</div>
+<span id="0">目录：</span>
 1. [本地文件上传到云服务器](#1)
 2. [Git上传文件到中央存储库](#2) 
 3. [mysql数据库操作](#3)
 4. [tomcat配置外网访问](#4)
 
 
-<div id="1">一. 本地文件上传到云服务器</div>
+[<span id="1">一. 本地文件上传到云服务器</span>](#0)
 
 ![](picture/p1.png)
 ![](picture/p2.png)
@@ -19,7 +19,7 @@
 ![](picture/p7.png)
 ---	
 
-<div id="2">二. Git上传文件到中央存储库</div>
+[<span id="2">二. Git上传文件到中央存储库</span>](#0)
 1. 单击右键->点击 Git Bash Here，显示如下页面
 
 ![](picture/g1.png)
@@ -58,7 +58,7 @@
 ---
 	
 
-<div id="3">三. mysql数据库操作</div>
+[<span id="3">三. mysql数据库操作</span>](#0)
 1. 开启mysql服务：sqlstart
    查看mysql开启状态：sqlstatus
    关闭mysql服务：sqlstop
@@ -89,7 +89,7 @@
 
 ---
 	
-<div id="4">四. tomcat配置外网访问</div>
+[<span id="4">四. tomcat配置外网访问</span>](#0)
 1. 使用scp命令将代码放入webapps文件夹下
 
 ![](picture/t1.png)
