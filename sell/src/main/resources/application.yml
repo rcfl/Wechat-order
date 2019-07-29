@@ -1,0 +1,48 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: crwen469612
+    url: jdbc:mysql://127.0.0.1/sell?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+  thymeleaf:
+    encoding: UTF-8
+## 热部署静态文件
+    cache: false
+## 使用HTML5标准
+    mode: HTML5
+  redis:
+    host: 127.0.0.1
+    port: 6379
+server:
+  servlet:
+    context-path: /sell
+
+#logging:
+#  pattern:
+#    console: "%d - %msg%n"
+##  path: /var/log/tomcat/
+#  file: /var/log/tomcat/sell.log
+#  level: debug
+
+wechat:
+  mpAppId: wx8840f78475f1ccdf
+  mpAppSecret: 76934be82e82467c0da5a03cd1105593
+  openAppId: x6ad144e54af67d87
+  openAppSecret: 91a2dd6s38a2bbccfb7e9
+  mchId: 1409146202
+  mchKey: c976503d34ca432c601361f969fd8d85
+  keyPath: D:\LearnDevelope\sell\sell\weixin_cert\h5.p12
+  notifyUrl: http://sellayucn.free.idcfengye.com/sell/pay/notify
+  templateId:
+    orderStatus: znHWd0FNM8EpWO1TEmWZm_zYskJZEK_QNfs2y5abcFA
+
+
+project-url:
+  wechatMpAuthorize: http://sellayucn.free.idcfengye.com
+  wechatOpenAuthorize: http://sellayucn.free.idcfengye.com
+  sell: http://sellayucn.free.idcfengye.com
