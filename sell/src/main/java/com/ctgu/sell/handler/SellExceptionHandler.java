@@ -21,11 +21,12 @@ public class SellExceptionHandler {
 	@ExceptionHandler(value = SellerAuthorizeException.class)
 	public ModelAndView handlerAuthorizeException() {
 		return new ModelAndView("redirect:"
-		.concat(projectUrlConfig.getWechatMpAuthorize())
-		.concat("/sell/wechat/qrAuthorize").
-		concat("?returnUrl=")
+		//.concat(projectUrlConfig.getWechatMpAuthorize())
+		//.concat("/sell/wechat/qrAuthorize").
+		//concat("?returnUrl=")
 		.concat(projectUrlConfig.getSell())
-		.concat("/sell/seller/login"));
+		//.concat("/sell/seller/login"));
+		.concat("/sell/seller/user/"));
 	}
 
 	@ExceptionHandler(value = SellException.class)
