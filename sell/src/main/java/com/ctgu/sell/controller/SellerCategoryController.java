@@ -4,14 +4,13 @@ import com.ctgu.sell.domain.ProductCategory;
 import com.ctgu.sell.exception.SellException;
 import com.ctgu.sell.form.CategoryForm;
 import com.ctgu.sell.service.ProductCategoryService;
+import com.ctgu.sell.utils.ResultVoUtil;
+import com.ctgu.sell.vo.ResultVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -25,15 +24,35 @@ public class SellerCategoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 
+	//@GetMapping("/list")
+	//public ModelAndView list(Map<String, Object> map) {
+	//
+	//	List<ProductCategory> productCategoryList = productCategoryService.findAll();
+	//	map.put("categoryList", productCategoryList);
+	//
+	//	return new ModelAndView("category/list", map);
+	//}
+
 	@GetMapping("/list")
-	public ModelAndView list(Map<String, Object> map) {
+	@ResponseBody
+	public ResultVo list() {
 
 		List<ProductCategory> productCategoryList = productCategoryService.findAll();
-		map.put("categoryList", productCategoryList);
+		//map.put("categoryList", productCategoryList);
 
-		return new ModelAndView("category/list", map);
+		//return new ModelAndView("category/list", map);
+
+		ResultVo resultVo = ResultVoUtil.success(productCategoryList);
+
+		return resultVo;
 	}
 
+	/**
+	 * 类目导航
+	 * @param categoryId
+	 * @param map
+	 * @return
+	 */
 	@GetMapping("/index")
 	public ModelAndView index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
 	                          Map<String, Object> map) {
@@ -45,6 +64,13 @@ public class SellerCategoryController {
 		return new ModelAndView("category/index", map);
 	}
 
+	/**
+	 * 新增目录
+	 * @param form
+	 * @param bindingResult
+	 * @param map
+	 * @return
+	 */
 	@PostMapping("/save")
 	public ModelAndView save(@Valid CategoryForm form,
 	                         BindingResult bindingResult,
