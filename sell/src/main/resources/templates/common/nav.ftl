@@ -59,7 +59,7 @@
                     <i class="fas fa-caret-down float-none float-lg-right fa-sm"></i>
                 </a>
                 <div class="dropdown-menu border-0 animated fadeIn" role="menu">
-                    <a class="dropdown-item text-white" role="presentation" href="#"><span>操作</span></a>
+                    <#--<a class="dropdown-item text-white" role="presentation" href="#"><span>操作</span></a>-->
                     <a class="dropdown-item text-white" role="presentation" href="/sell/seller/product/list"><span>列表</span></a>
                     <a class="dropdown-item text-white" role="presentation" href="/sell/seller/product/index"><span>新增</span></a>
                 </div>
@@ -71,7 +71,7 @@
                     <i class="fas fa-caret-down float-none float-lg-right fa-sm"></i>
                 </a>
                 <div class="dropdown-menu border-0 animated fadeIn" role="menu">
-                    <a class="dropdown-item text-white" role="presentation" href="#"><span>操作</span></a>
+                    <#--<a class="dropdown-item text-white" role="presentation" href="#"><span>操作</span></a>-->
                     <a class="dropdown-item text-white" role="presentation" href="/sell/seller/category/list"><span>列表</span></a>
                     <a class="dropdown-item text-white" role="presentation" href="/sell/seller/category/index"><span>新增</span></a>
                 </div>

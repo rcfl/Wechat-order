@@ -4,17 +4,17 @@ import com.ctgu.sell.domain.ProductCategory;
 import com.ctgu.sell.exception.SellException;
 import com.ctgu.sell.form.CategoryForm;
 import com.ctgu.sell.service.ProductCategoryService;
-import com.ctgu.sell.utils.ResultVoUtil;
-import com.ctgu.sell.vo.ResultVo;
+import com.ctgu.sell.vo.CommonPage;
+import com.ctgu.sell.vo.CommonResult;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,17 +35,29 @@ public class SellerCategoryController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public ResultVo list() {
+	public CommonResult list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+	                         @RequestParam(value = "size", defaultValue = "10") Integer size) {
 
-		List<ProductCategory> productCategoryList = productCategoryService.findAll();
+
+		Page<ProductCategory> productCategoryPage = productCategoryService.findAll(PageRequest.of(page - 1, size));
 		//map.put("categoryList", productCategoryList);
-
+		CommonPage commonPage = CommonPage.restPage(productCategoryPage);
 		//return new ModelAndView("category/list", map);
 
-		ResultVo resultVo = ResultVoUtil.success(productCategoryList);
+		//ResultVo resultVo = ResultVoUtil.success(productCategoryList);
+		//CommonPage commonPage = new CommonPage();
+		//Page<ProductCategory> categoryPage = new PageImpl<>(productCategoryList);
+		//CommonPage<ProductCategory> commonPage = CommonPage.restPage(categoryPage);
 
-		return resultVo;
+
+		return CommonResult.success(commonPage);
 	}
+
+
+
+	//@GetMapping("/list/withChildren")
+	//@ResponseBody
+	//public CommonResult find
 
 	/**
 	 * 类目导航
@@ -53,15 +65,18 @@ public class SellerCategoryController {
 	 * @param map
 	 * @return
 	 */
-	@GetMapping("/index")
-	public ModelAndView index(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+	@GetMapping(value = {"/index/{categoryId}", "index"})
+	@ResponseBody
+	public CommonResult index(@RequestBody @PathVariable (value = "categoryId", required = false) Integer categoryId,
 	                          Map<String, Object> map) {
+		ProductCategory productCategory = null;
 		if (categoryId != null && categoryId >= 0) {
-			ProductCategory productCategory = productCategoryService.findById(categoryId);
+			productCategory = productCategoryService.findById(categoryId);
 			map.put("productCategory", productCategory);
 		}
 
-		return new ModelAndView("category/index", map);
+		//return new ModelAndView("category/index", map);
+		return CommonResult.success(productCategory);
 	}
 
 	/**
@@ -71,11 +86,15 @@ public class SellerCategoryController {
 	 * @param map
 	 * @return
 	 */
-	@PostMapping("/save")
-	public ModelAndView save(@Valid CategoryForm form,
+	@RequestMapping("/save")
+	@ResponseBody
+	public CommonResult save(
+			//@RequestBody CategoryForm form,
+	                         @Valid @RequestBody CategoryForm form,
 	                         BindingResult bindingResult,
 	                         Map<String, Object> map) {
-		System.out.println(form);
+		//System.out.println(form);
+		ProductCategory result = null;
 		if (bindingResult.hasErrors()) {
 			map.put("url", "/sell/seller/category/index");
 			map.put("msg", bindingResult.getFieldError().getDefaultMessage());
@@ -88,15 +107,17 @@ public class SellerCategoryController {
 
 			}
 			BeanUtils.copyProperties(form, productCategory);
-			productCategoryService.save(productCategory);
+			result = productCategoryService.save(productCategory);
 		} catch (SellException e) {
 			map.put("msg", e.getMessage());
 			map.put("url", "/sell/seller/category/index");
-			return new ModelAndView("common/error", map);
+			//return new ModelAndView("common/error", map);
+			return CommonResult.failed();
 		}
 
 		map.put("url", "/sell/seller/category/list");
-		return new ModelAndView("common/success", map);
+		//return new ModelAndView("common/success", map);
+		return CommonResult.success(form);
 	}
 
 

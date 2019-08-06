@@ -4,6 +4,8 @@ import com.ctgu.sell.domain.ProductCategory;
 import com.ctgu.sell.repository.ProductCategoryRepository;
 import com.ctgu.sell.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,10 +24,25 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 		return productCategoryRepository.findById(catgoryId).get();
 	}
 
+	/**
+	 * 分页查询
+	 * @param pageable
+	 * @return
+	 */
+	@Override
+	public Page<ProductCategory> findAll(Pageable pageable) {
+		return productCategoryRepository.findAll(pageable);
+	}
+
+	/**
+	 * 查询全部
+	 * @return
+	 */
 	@Override
 	public List<ProductCategory> findAll() {
 		return productCategoryRepository.findAll();
 	}
+
 
 	@Override
 	public List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList) {

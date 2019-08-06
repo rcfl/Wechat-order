@@ -19,7 +19,8 @@ public class ProductVo implements Serializable {
 	@JsonProperty("type")
 	private Integer categoryType;
 
-	@JsonProperty("foods")
+	//@JsonProperty("foods")
+	@JsonProperty("list")
 	private List<ProductInfoVo> productInfoVoList;
 
 }

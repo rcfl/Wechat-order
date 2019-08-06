@@ -253,4 +253,11 @@ public class OrderServiceImpl implements OrderService {
 
 		return new PageImpl<OrderDTO>(orderDTOList, pageable, orderMasterPage.getTotalElements());
 	}
+
+	//@Override
+	//public Page<OrderDTO> findByOpenId(Pageable pageable) {
+	//	orderMasterRepository.findByBuyerOpenid()
+	//	return null;
+	//}
+
 }

@@ -37,7 +37,7 @@ public class WechatController {
 		//调用方法
 		//String url = "http://sellayucn.free.idcfengye.com/sell/wechat/userInfo";
 		String url = projectUrlConfig.getWechatMpAuthorize() + "/sell/wechat/userInfo";
-		final WxMpConfigStorage wxMpConfigStorage = wxMpService.getWxMpConfigStorage();
+		WxMpConfigStorage wxMpConfigStorage = wxMpService.getWxMpConfigStorage();
 		String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_BASE, URLEncoder.encode(returnUrl));
 		log.info("【微信网页授权】 获取code， redirectUrl={}", redirectUrl);
 
@@ -62,6 +62,7 @@ public class WechatController {
 	@GetMapping("/qrAuthorize")
 	public String qrAuthorize(@RequestParam("returnUrl") String returnUrl) {
 		String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
+		//String url = projectUrlConfig.getWechatOpenAuthorize() + "/sell/wechat/qrUserInfo";
 		//String url =  "http://sellayucn.free.idcfengye.com/sell/wechat/qrUserInfo";
 		String redirectUrl = wxOpenService.buildQrConnectUrl(url, WxConsts.QrConnectScope.SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
 		return "redirect:" + redirectUrl;

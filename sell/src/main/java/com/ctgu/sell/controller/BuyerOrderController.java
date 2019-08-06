@@ -54,6 +54,7 @@ public class BuyerOrderController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("orderId", createResult.getOrderId());
 
+		//return ResultVoUtil.success(map);
 		return ResultVoUtil.success(map);
 	}
 	//订单列表
@@ -90,5 +91,13 @@ public class BuyerOrderController {
 		return ResultVoUtil.success();
 
 	}
+
+	//@GetMapping("/history")
+	//public CommonResult historyList(@RequestParam("openid") String openId,
+	//                                Map<String, Object>) {
+	//	//orderService.findB
+	//
+	//
+	//}
 
 }

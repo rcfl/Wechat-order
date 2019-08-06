@@ -3,8 +3,8 @@ package com.ctgu.sell.dto;
 import com.ctgu.sell.domain.OrderDetail;
 import com.ctgu.sell.enums.OrderStatusEnum;
 import com.ctgu.sell.enums.PayStatusEnum;
-import com.ctgu.sell.utils.serializer.Date2LongSerializer;
 import com.ctgu.sell.utils.EnumUtil;
+import com.ctgu.sell.utils.serializer.Date2LongSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
@@ -51,6 +51,7 @@ public class OrderDTO {
 	//更新时间
 	@JsonSerialize(using = Date2LongSerializer.class)
 	private Date updateTime;
+
 
 	private List<OrderDetail> orderDetailList;
 

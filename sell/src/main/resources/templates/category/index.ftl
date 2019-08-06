@@ -21,7 +21,7 @@
                             <input name="categoryType" type="text" class="form-control" value="${(productCategory.categoryType)!''}" />
                         </div>
                         <input hidden type="text" name="categoryId" value="${(productCategory.categoryId)!''}">
-                         <button type="submit" class="btn btn-default">提交</button>
+                         <button type="submit" class="btn btn-primary">提交</button>
                     </form>
                 </div>
             </div>

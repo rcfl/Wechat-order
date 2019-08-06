@@ -5,19 +5,16 @@ import com.ctgu.sell.enums.ResultEnum;
 import com.ctgu.sell.exception.SellException;
 import com.ctgu.sell.service.BuyerService;
 import com.ctgu.sell.service.OrderService;
-import com.ctgu.sell.utils.ResultVoUtil;
-import com.ctgu.sell.vo.ResultVo;
+import com.ctgu.sell.vo.CommonPage;
+import com.ctgu.sell.vo.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,14 +43,24 @@ public class SellerOrderController {
 
 	@GetMapping("/list")
 	@ResponseBody
-	public ResultVo findList(@RequestParam(value = "page", defaultValue = "1") Integer page,
+	public CommonResult findList(@RequestParam(value = "page", defaultValue = "1") Integer page,
 	                             @RequestParam(value = "size", defaultValue = "10") Integer size) {
-		//Page<OrderDTO> orderDTOPage = orderService.findList(PageRequest.of(page - 1, size));
-		List<OrderDTO> orderDTOList = orderService.findList(PageRequest.of(page - 1, size)).getContent();
+		Page<OrderDTO> orderDTOPage = orderService.findList(PageRequest.of(page - 1, size));
+		//List<OrderDTO> orderDTOList = orderService.findList(PageRequest.of(page - 1, size)).getContent();
 
-		ResultVo resultVo = ResultVoUtil.success(orderDTOList);
+		//OrderVo orderVo = new OrderVo();
+		//orderVo.setOrderDTOList(orderDTOList);
+		//orderVo.setTotal(orderVo.getOrderDTOList().size());
+		//orderVo.setPageNum(page);
+		//orderVo.setPageSize(size);
+		//orderVo.setTotalPage(Math.round((float) orderVo.getTotal() / orderVo.getPageSize() + 0.5F));
 
-		return resultVo;
+
+
+		CommonPage commonPage = CommonPage.restPage(orderDTOPage);
+		return CommonResult.success(commonPage);
+		//CommonResult commonResult = new CommonResult(commonPage);
+		//return CommonResult.success(commonPage);
 		//map.put("orderDTOPage", orderDTOPage);
 		//map.put("currentPage", page);
 		//map.put("size", size);
@@ -68,9 +75,10 @@ public class SellerOrderController {
 	 * @return
 	 */
 	@GetMapping("/cancel")
-	public ModelAndView cancel(@RequestParam("orderId") String orderId,
+	@ResponseBody
+	public CommonResult cancel(@RequestParam("orderId") String orderId,
 	                           Map<String, Object> map) {
-		OrderDTO orderDTO = new OrderDTO();
+		OrderDTO orderDTO;
 		try {
 			orderDTO = orderService.findByOrderId(orderId);
 			orderService.cancel(orderDTO);
@@ -79,12 +87,14 @@ public class SellerOrderController {
 
 			map.put("msg", e.getMessage());
 			map.put("url", "/sell/seller/order/list");
-			return new ModelAndView("commoon/error", map);
+			//return new ModelAndView("commoon/error", map);
+			return CommonResult.failed();
 		}
 
 		map.put("msg", ResultEnum.ORDER_CANCEL_SUCCESS.getMessage());
 		map.put("url", "/sell/seller/order/list");
-		return new ModelAndView("common/success");
+		//return new ModelAndView("common/success");
+		return CommonResult.success(orderDTO);
 	}
 
 	/**
@@ -93,8 +103,9 @@ public class SellerOrderController {
 	 * @param map
 	 * @return
 	 */
-	@GetMapping("/detail")
-	public ModelAndView detail(@RequestParam("orderId") String orderId,
+	@GetMapping("/detail/{orderId}")
+	@ResponseBody
+	public CommonResult detail(@RequestBody @PathVariable("orderId") String orderId,
 	                           Map<String, Object> map) {
 		OrderDTO orderDTO = new OrderDTO();
 		try {
@@ -105,12 +116,14 @@ public class SellerOrderController {
 
 			map.put("msg", e.getMessage());
 			map.put("url", "/sell/seller/order/list");
-			return new ModelAndView("commoon/error", map);
+			//return new ModelAndView("commoon/error", map);
+			return CommonResult.failed();
 		}
 
 		map.put("orderDTO", orderDTO);
 
-		return new ModelAndView("order/detail", map);
+		//return new ModelAndView("order/detail", map);
+		return CommonResult.success(orderDTO);
 	}
 
 	/**

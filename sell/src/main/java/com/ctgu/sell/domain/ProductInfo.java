@@ -2,7 +2,9 @@ package com.ctgu.sell.domain;
 
 import com.ctgu.sell.enums.ProductStatusEnum;
 import com.ctgu.sell.utils.EnumUtil;
+import com.ctgu.sell.utils.serializer.Date2LongSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -46,9 +48,11 @@ public class ProductInfo implements Serializable {
 	private Integer categoryType;
 
 	//创建时间
+	@JsonSerialize(using = Date2LongSerializer.class)
 	private Date createTime;
 
 	//更新时间
+	@JsonSerialize(using = Date2LongSerializer.class)
 	private Date updateTime;
 
 	/**

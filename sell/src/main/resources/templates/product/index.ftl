@@ -47,7 +47,7 @@
                             </select>
                         </div>
                         <input hidden type="text" name="productId" value="${(productInfo.productId)!''}">
-                         <button type="submit" class="btn btn-default">提交</button>
+                         <button type="submit" class="btn btn-primary">提交</button>
                     </form>
                 </div>
             </div>
